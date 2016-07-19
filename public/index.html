@@ -24,7 +24,10 @@ function initialize() {
 }
 
 function handleEvent(event) {
-	saveToFile(event.latLng);
+    latitude = event.latLng.lat().toFixed(5);
+    longitude = event.latLng.lng().toFixed(5);
+    url = "https://location-mock.appspot.com/_ah/api/location/v1/location/set?latitude="+latitude+"&longitude="+longitude;
+	response = httpGet(url);
 }
 
 function addMarker(latlng,title,map, marker) {
@@ -38,8 +41,12 @@ function addMarker(latlng,title,map, marker) {
     marker.addListener('dragend', handleEvent);
 }
 
-function saveToFile(location) {
-	download(location, 'location.txt', 'plain');
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
 }
 
 function download(content, filename, contentType)
