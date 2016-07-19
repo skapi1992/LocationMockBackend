@@ -9,9 +9,18 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
+- url: /_ah/spi/.*
+  script: main_api.api
+
+- url: /
+  static_files: public/index.html
+  upload: public/index.html
+
 - url: .*
   script: main.app
 
 libraries:
 - name: webapp2
   version: "2.5.2"
+- name: endpoints
+  version: 1.0
